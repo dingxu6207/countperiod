@@ -23,7 +23,7 @@ filename = path+file
 fitshdu = fits.open(filename)
 data = fitshdu[0].data
 i = 0 #行扫描 i = 21
-j = 6#列扫描 j=20
+j = 8#列扫描 j=20
 fitsdata = data[398*i:398+398*i,389*j:389+389*j]
 
 def adjustimage(imagedata, coffe):

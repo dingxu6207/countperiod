@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 lightdata = np.loadtxt('starlight.txt')
 
-mhang = 148
+mhang = 54
 x,y = lightdata[mhang,0:2]
 
 

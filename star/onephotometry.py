@@ -103,7 +103,7 @@ targettemp = []
 datatemp = []
 
 m = 0#行扫描 i = 39
-n = 6#列扫描 j = 39
+n = 8#列扫描 j = 39
 for i in range(0, count):
     try:
         fitshdu = fits.open(oripath+filetemp[i])
@@ -115,9 +115,10 @@ for i in range(0, count):
         startemp.append(magstar) 
         arraytemp = np.array(startemp).T        
         
-        posflux1,mag1 = sourcephotometry(242, 62, posflux)  #比较星位置1        
-        posflux2,mag2 = sourcephotometry(260, 165, posflux)  #比较星位置2
-        posflux3,mag3 = sourcephotometry(341, 288, posflux)   
+        posflux1,mag1 = sourcephotometry(244, 220, posflux)  #比较星位置1        
+        posflux2,mag2 = sourcephotometry(165, 88, posflux)  #比较星位置2
+        
+        posflux3,mag3 = sourcephotometry(76, 102, posflux)   
        
         jiaoyan = mag1-mag2 
         target = mag3 - mag1
@@ -132,22 +133,14 @@ for i in range(0, count):
     except:
         print('error!!!')
     
-#starlight = np.hstack((lacation, arraytemp)) 
-#np.savetxt('starlight.txt', starlight)   
-#jiaoyandata = pltquxian(jiaoyan)
-arraytarget = np.array(targettemp)
-arraydata = np.array(datatemp)
-matrix = np.vstack((arraydata, arraytarget))
-a = matrix.T
-msort = a[np.lexsort(a.T)]
-plt.figure(2)
-plt.plot(jiaoyantemp,'.')
-plt.figure(3)
-plt.plot(targettemp,'.')
 
-plt.figure(4)
-plt.plot(msort[:,0:1],msort[:,1:2],'.')
+plt.figure(2)
+plt.plot(datatemp, jiaoyantemp,'.')
+plt.figure(3)
+plt.plot(datatemp,targettemp,'.')
+
 plt.xlabel('JD',fontsize=14)
 plt.ylabel('mag',fontsize=14)
+
 
 
