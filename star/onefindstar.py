@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 lightdata = np.loadtxt('starlight.txt')
 
-mhang = 54
+mhang = 2140
 x,y = lightdata[mhang,0:2]
 
 
@@ -24,6 +24,7 @@ data = fitshdu[0].data
 j = int(x/389) #行扫描 i = 21
 i = int(y/398)#列扫描 j=20
 
+print(i,j)
 fitsdata = np.copy(data[398*i:398+398*i,389*j:389+389*j])
 
 def adjustimage(imagedata, coffe):

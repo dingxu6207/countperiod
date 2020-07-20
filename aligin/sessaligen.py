@@ -49,10 +49,12 @@ for i in range(1, count):
     imgdata2 = twohdu[0].data  #hdu[0].header
     #datatime2 = twohdu[0].header['DATE']
     #print(datatime2,fitsname2)
-    DATEOBS = onehdu[0].header['DATE-OBS']
-    TIME = onehdu[0].header['TIME']
+    DATEOBS = twohdu[0].header['DATE-OBS']
+    TIME = twohdu[0].header['TIME']
     datatime2 = '20'+DATEOBS[-2:]+'-'+DATEOBS[-5:-3]+'-'+DATEOBS[-8:-6]+'T'+TIME[-10:]
-    copydata2 = np.copy(imgdata2)  
+    copydata2 = np.copy(imgdata2) 
+    print(datatime2)
+    
     try:
         aligned_image, footprint = aa.register(copydata2, copydata1)
         witefits(aligned_image, i, datatime2)

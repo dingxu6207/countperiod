@@ -51,8 +51,8 @@ def photometryimg(positions, img, i):
     
     positionslist = positions.tolist()
     
-    aperture = CircularAperture(positionslist, r=4.5) #2*FWHM
-    annulus_aperture = CircularAnnulus(positionslist, r_in=6.5, r_out=7.5)#4-5*FWHM+2*FWHM
+    aperture = CircularAperture(positionslist, r=4.8) #2*FWHM
+    annulus_aperture = CircularAnnulus(positionslist, r_in=6.3, r_out=7.4)#4-5*FWHM+2*FWHM
     apers = [aperture, annulus_aperture]
     
     displayimage(img, 1, i) ###画图1
@@ -102,8 +102,8 @@ startemp = []
 targettemp = []
 datatemp = []
 
-m = 0#行扫描 i = 39
-n = 8#列扫描 j = 39
+m = 6#行扫描 i = 39
+n = 1#列扫描 j = 39
 for i in range(0, count):
     try:
         fitshdu = fits.open(oripath+filetemp[i])
@@ -115,10 +115,10 @@ for i in range(0, count):
         startemp.append(magstar) 
         arraytemp = np.array(startemp).T        
         
-        posflux1,mag1 = sourcephotometry(244, 220, posflux)  #比较星位置1        
-        posflux2,mag2 = sourcephotometry(165, 88, posflux)  #比较星位置2
+        posflux1,mag1 = sourcephotometry(252, 214, posflux)  #比较星位置1        
+        posflux2,mag2 = sourcephotometry(305, 215, posflux)  #比较星位置2
         
-        posflux3,mag3 = sourcephotometry(76, 102, posflux)   
+        posflux3,mag3 = sourcephotometry(207, 224, posflux)   
        
         jiaoyan = mag1-mag2 
         target = mag3 - mag1
@@ -133,14 +133,22 @@ for i in range(0, count):
     except:
         print('error!!!')
     
-
+#datatemp[:] = [x - 2458776 for x in datatemp]
 plt.figure(2)
 plt.plot(datatemp, jiaoyantemp,'.')
-plt.figure(3)
-plt.plot(datatemp,targettemp,'.')
-
 plt.xlabel('JD',fontsize=14)
 plt.ylabel('mag',fontsize=14)
 
+plt.figure(3)
+plt.plot(datatemp,targettemp,'.')
+plt.xlabel('JD',fontsize=14)
+plt.ylabel('mag',fontsize=14)
+ax = plt.gca()
+ax.yaxis.set_ticks_position('right') #将y轴的位置设置在右边
+ax.invert_yaxis() #y轴反向
 
-
+templist = []
+templist.append(datatemp)
+templist.append(targettemp)
+tempmatrix = np.array(templist)
+np.savetxt('datamag.txt', tempmatrix)
