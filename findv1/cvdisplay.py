@@ -16,8 +16,9 @@ fitshdu = fits.open(filename)
 data = fitshdu[0].data
 
 i = 0
-j = 1
+j = 0
 fitsdata = np.copy(data[796*i:796+796*i,778*j:778+778*j])
+print(i,j)
 
 def adjustimage(imagedata, coffe):
     mean = np.mean(imagedata)
@@ -48,13 +49,12 @@ def findtarget(targetx, targety, sumpho, threshold=10):
 displayimage(data, 1, 0) 
 displayimage(fitsdata, 1, 1) 
 
+'''
 datatime = np.loadtxt('datatime.txt')
 starlight = np.loadtxt('starlight.txt')
 
-
-
-x1 = 193
-y1 = 694
+x1 = 191
+y1 = 697
 xyflux1 = findtarget(778*j+x1, 796*i+y1, starlight)
 plt.plot(xyflux1[0]-778*j,xyflux1[1]-796*i,'*')
 
@@ -66,3 +66,22 @@ plt.plot(xyflux2[0]-778*j,xyflux2[1]-796*i,'*')
 
 plt.figure(2)
 plt.plot(datatime, xyflux2[2:]-xyflux1[2:],'.')
+
+
+tempflux = np.copy(starlight)
+hang,lie = tempflux.shape
+for m in range(hang):
+    if tempflux[m,0] >= 778*j and tempflux[m,0] <= 778+778*j and tempflux[m,1] >= 796*i and tempflux[m,1] <= 796+796*i:
+        tempflux[m,2:] = tempflux[m,2:]-xyflux1[2:]
+        plt.figure(4)
+        plt.title(str(m))
+        plt.plot(datatime,  tempflux[m,2:], '.')
+        plt.pause(1)
+        plt.clf()
+        displayimage(fitsdata, 1, 5)
+        plt.plot(tempflux[m,0]-778*j,tempflux[m,1]-796*i,'*')
+        plt.pause(0.1)
+        plt.clf()
+'''        
+#np.savetxt('tempflux'+str(i)+str(j)+'.txt', tempflux)
+   
